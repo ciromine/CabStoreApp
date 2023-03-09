@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/productListFragment">
+
+    <fragment
+        android:id="@+id/productListFragment"
+        android:name="com.example.cabstoreapp.ui.productlist.ProductListFragment"
+        android:label="@string/tv_title_product_list"
+        tools:layout="@layout/fragment_product_list">
+        <action
+            android:id="@+id/action_listFragment_to_detailFragment"
+            app:destination="@id/detailFragment"
+            app:popUpTo="@+id/detailFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/detailFragment"
+        android:name="com.example.cabstoreapp.ui.detail.DetailFragment"
+        android:label="@string/tv_title_product_detail_list"
+        tools:layout="@layout/fragment_detail">
+        <argument
+            android:name="domainProduct"
+            app:argType="com.example.cabstoreapp.domain.model.DomainProduct" />
+        <action
+            android:id="@+id/action_detailFragment_to_mapFragment"
+            app:destination="@id/mapFragment"
+            app:popUpTo="@+id/mapFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+
+</navigation>
+

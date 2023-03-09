@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">CabStoreApp</string>
+    <string name="error_get_product_list">Error al obtener lista de recetas</string>
+    <string name="tv_product_title_label">Listado de productos</string>
+    <string name="tv_title_product_list">Listado de productos</string>
+    <string name="tv_title_product_detail_list">Detalle de product</string>
+
+</resources>
