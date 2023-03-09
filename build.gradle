@@ -6,6 +6,7 @@ buildscript {
     ext.coroutines_version = "1.4.3"
     ext.hilt_version = "2.42"
     ext.testing_mockK_version = '1.10.0'
+    ext.room_version = "2.4.3"
 }
 plugins {
     id 'com.android.application' version '7.2.1' apply false

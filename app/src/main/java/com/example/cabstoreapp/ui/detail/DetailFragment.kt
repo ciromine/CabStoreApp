@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.example.cabstoreapp.R
 import com.example.cabstoreapp.databinding.FragmentDetailBinding
 import com.example.cabstoreapp.domain.model.DomainProduct
 import com.example.cabstoreapp.ui.navigator.Navigator
@@ -13,6 +12,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 import javax.inject.Inject
+
 
 @ExperimentalCoroutinesApi
 @FlowPreview
@@ -45,10 +45,19 @@ class DetailFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding?.apply {
-            tvIngredients.text = product?.name//"${view.context.getString(R.string.label_ingredients, product?.title)} ${ListUtils.getIngredientsNames(product?.ingredients)}"
-            tvDescription.text = product?.code
+            tvNameValue.text =
+                product?.name
+            tvPriceValue.text = "$${product?.price}"
 
-            btGoToMap.setOnClickListener{
+            val values =
+                arrayOf("1", "2", "3", "4", "5", "6", "7", "8", "9", "10")
+            numberQunatity.maxValue = values.size - 1
+            numberQunatity.displayedValues = values
+            numberQunatity.wrapSelectorWheel = true
+            numberQunatity.setOnValueChangedListener { numberPicker, oldVal, newVal ->
+            }
+
+            btBuy.setOnClickListener {
                 product?.let {
                     //goToCharacterEdit(it)
                 }

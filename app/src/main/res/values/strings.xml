@@ -4,5 +4,9 @@
     <string name="tv_product_title_label">Listado de productos</string>
     <string name="tv_title_product_list">Listado de productos</string>
     <string name="tv_title_product_detail_list">Detalle de product</string>
+    <string name="bt_buy">Comprar</string>
+    <string name="tv_quantity">Cantidad:</string>
+    <string name="tv_name">Nombre:</string>
+    <string name="tv_price">Precio:</string>
 
 </resources>
