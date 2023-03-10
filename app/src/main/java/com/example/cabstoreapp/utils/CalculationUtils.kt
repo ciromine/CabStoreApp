@@ -24,12 +24,13 @@ class CalculationUtils {
                 total -= ((countVouchers / 2) * valueVoucher)
             }
             if (countTshirt > 3) {
-                total = total - (valueTshirt * countTshirt) + (19.00 * countTshirt)
+                total = total - (valueTshirt * countTshirt) + (TSHIRT_PROMO_PRICE * countTshirt)
             }
             return total
         }
 
         const val VOUCHER = "VOUCHER"
         const val TSHIRT = "TSHIRT"
+        const val TSHIRT_PROMO_PRICE = 19.00
     }
 }

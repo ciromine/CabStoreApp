@@ -63,6 +63,7 @@ class MainActivity : AppCompatActivity() {
                         show()
                     }
                 }
+
                 else -> {
                     supportActionBar?.show()
                 }

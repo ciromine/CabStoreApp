@@ -20,11 +20,6 @@
             app:destination="@id/checkoutFragment"
             app:popUpTo="@+id/checkoutFragment"
             app:popUpToInclusive="true" />
-        <action
-            android:id="@+id/go_list"
-            app:destination="@+id/productListFragment"
-            app:popUpTo="@+id/destination_to_pop"
-            app:popUpToInclusive="true"/>
     </fragment>
 
     <fragment
@@ -32,6 +27,12 @@
         android:name="com.example.cabstoreapp.ui.detail.DetailFragment"
         android:label="@string/tv_title_product_detail_list"
         tools:layout="@layout/fragment_detail">
+        <argument
+            android:name="domainProduct"
+            app:argType="com.example.cabstoreapp.domain.model.DomainProduct" />
+        <action
+            android:id="@+id/action_detailFragment_to_productListFragment"
+            app:destination="@id/productListFragment" />
     </fragment>
 
     <fragment
@@ -39,6 +40,9 @@
         android:name="com.example.cabstoreapp.ui.checkout.CheckoutFragment"
         android:label="@string/tv_title_product_detail_list"
         tools:layout="@layout/fragment_checkout">
+        <action
+            android:id="@+id/action_checkoutFragment_to_productListFragment"
+            app:destination="@id/productListFragment" />
     </fragment>
 
 </navigation>

@@ -5,12 +5,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
+import androidx.navigation.Navigation
 import com.example.cabstoreapp.R
 import com.example.cabstoreapp.core.ShopCart
 import com.example.cabstoreapp.databinding.FragmentDetailBinding
 import com.example.cabstoreapp.domain.model.DomainProduct
-import com.example.cabstoreapp.presentation.productlist.ProductListViewModel
 import com.example.cabstoreapp.ui.navigator.Navigator
 import com.example.cabstoreapp.utils.show
 import dagger.hilt.android.AndroidEntryPoint
@@ -28,8 +27,6 @@ class DetailFragment : Fragment() {
     var product: DomainProduct? = null
 
     private var currentQuantityValue = 0
-
-    private val viewModel by viewModels<ProductListViewModel>()
 
     @Inject
     lateinit var navigator: Navigator
@@ -70,13 +67,11 @@ class DetailFragment : Fragment() {
             numberQuantity.maxValue = values.size - 1
             numberQuantity.displayedValues = values
             numberQuantity.wrapSelectorWheel = true
-            numberQuantity.setOnValueChangedListener { numberPicker, oldVal, newVal ->
-                currentQuantityValue = newVal
-            }
 
             btBuy.setOnClickListener {
                 product?.let { itProduct ->
-                    ShopCart.addProductToCart(itProduct, currentQuantityValue)
+                    ShopCart.addProductToCart(itProduct, numberQuantity.value+1)
+                    navigator.backtoProductListFromDetail(Navigation.findNavController(view))
                 }
             }
         }

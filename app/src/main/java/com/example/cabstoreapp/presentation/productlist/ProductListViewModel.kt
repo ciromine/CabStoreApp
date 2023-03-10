@@ -8,7 +8,7 @@ import com.example.cabstoreapp.presentation.productlist.ProductListAction.GetPro
 import com.example.cabstoreapp.presentation.productlist.ProductListAction.GoToDetailAction
 import com.example.cabstoreapp.presentation.productlist.ProductListResult.NavigateToResult.GoToDetail
 import com.example.cabstoreapp.presentation.productlist.ProductListUIntent.*
-import com.example.cabstoreapp.presentation.productlist.ProductListUiEffect.NavigateToCharacterDetailUiEffect
+import com.example.cabstoreapp.presentation.productlist.ProductListUiEffect.NavigateToProductDetailUiEffect
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
@@ -55,7 +55,7 @@ class ProductListViewModel @Inject constructor(
     private fun Flow<ProductListResult>.handleEffect(): Flow<ProductListResult> {
         return onEach { change ->
             val event = when (change) {
-                is GoToDetail -> NavigateToCharacterDetailUiEffect(
+                is GoToDetail -> NavigateToProductDetailUiEffect(
                     change.domainRecipe
                 )
                 else -> return@onEach

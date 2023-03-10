@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.Navigation
 import com.example.cabstoreapp.R
 import com.example.cabstoreapp.core.ShopCart
 import com.example.cabstoreapp.core.mvi.MviUi
@@ -71,7 +72,7 @@ class ProductListFragment : Fragment(), MviUi<ProductListUIntent, ProductListUiS
         super.onViewCreated(view, savedInstanceState)
         setHasOptionsMenu(true)
         binding?.btViewShopcart?.setOnClickListener {
-            navigator.goToCheckoutDetail(it.rootView)
+            navigator.goToCheckoutDetail(Navigation.findNavController(view))
         }
     }
 
@@ -158,7 +159,7 @@ class ProductListFragment : Fragment(), MviUi<ProductListUIntent, ProductListUiS
 
     private fun goToProductDetails(domainProduct: DomainProduct) {
         binding?.let {
-            navigator.goToProductDetail(it.root, domainProduct)
+            navigator.goToProductDetail(Navigation.findNavController(it.root), domainProduct)
         }
     }
 
@@ -171,20 +172,23 @@ class ProductListFragment : Fragment(), MviUi<ProductListUIntent, ProductListUiS
         super.onResume()
         val listOfProducts = ShopCart.getProductsFromCart()
         if (listOfProducts.size > 0) {
-            showBottomSheetDialog()
+            showSnackMessage()
             binding?.btViewShopcart?.isEnabled = true
         } else {
             binding?.btViewShopcart?.isEnabled = false
         }
     }
 
-    private fun showBottomSheetDialog() {
-        val buyBottomSheetDialog =
-            BuyBottomSheetDialog()
-        buyBottomSheetDialog.show(
-            parentFragmentManager,
-            BUY_BOTTOM_SHEET_DIALOG
-        )
+    private fun showSnackMessage() {
+        binding?.root?.let {
+            val snackbar = Snackbar
+                .make(
+                    it,
+                    getString(R.string.tv_label_checkout),
+                    Snackbar.LENGTH_LONG,
+                )
+            snackbar.show()
+        }
     }
 
     companion object {

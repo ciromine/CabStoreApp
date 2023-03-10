@@ -12,6 +12,7 @@
     <string name="tv_tshirt">Promoción por la compra de 3 poleras o más precio a solo 19.00€!!!</string>
     <string name="tv_label_checkout">Tienes productos en tu carro de compras, puedes ir a pagar o seguir escogiendo más productos</string>
     <string name="bt_checkout">Pagar</string>
+    <string name="bt_clean_checkout">Limpiar carrito</string>
     <string name="bt_view_shopcart">Ver carrito de compras</string>
     <string name="tv_total">Total:</string>
 
