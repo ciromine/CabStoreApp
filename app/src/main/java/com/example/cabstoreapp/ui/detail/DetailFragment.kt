@@ -5,14 +5,18 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import com.example.cabstoreapp.R
+import com.example.cabstoreapp.core.ShopCart
 import com.example.cabstoreapp.databinding.FragmentDetailBinding
 import com.example.cabstoreapp.domain.model.DomainProduct
+import com.example.cabstoreapp.presentation.productlist.ProductListViewModel
 import com.example.cabstoreapp.ui.navigator.Navigator
+import com.example.cabstoreapp.utils.show
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 import javax.inject.Inject
-
 
 @ExperimentalCoroutinesApi
 @FlowPreview
@@ -22,6 +26,10 @@ class DetailFragment : Fragment() {
     var binding: FragmentDetailBinding? = null
 
     var product: DomainProduct? = null
+
+    private var currentQuantityValue = 0
+
+    private val viewModel by viewModels<ProductListViewModel>()
 
     @Inject
     lateinit var navigator: Navigator
@@ -47,27 +55,35 @@ class DetailFragment : Fragment() {
         binding?.apply {
             tvNameValue.text =
                 product?.name
-            tvPriceValue.text = "$${product?.price}"
+            tvPriceValue.text = "$${product?.price}€"
+
+            if (product?.code == VOUCHER) {
+                tvPromoText.text = getString(R.string.tv_voucher)
+                cardView.show()
+            } else if (product?.code == TSHIRT) {
+                tvPromoText.text = getString(R.string.tv_tshirt)
+                cardView.show()
+            }
 
             val values =
                 arrayOf("1", "2", "3", "4", "5", "6", "7", "8", "9", "10")
-            numberQunatity.maxValue = values.size - 1
-            numberQunatity.displayedValues = values
-            numberQunatity.wrapSelectorWheel = true
-            numberQunatity.setOnValueChangedListener { numberPicker, oldVal, newVal ->
+            numberQuantity.maxValue = values.size - 1
+            numberQuantity.displayedValues = values
+            numberQuantity.wrapSelectorWheel = true
+            numberQuantity.setOnValueChangedListener { numberPicker, oldVal, newVal ->
+                currentQuantityValue = newVal
             }
 
             btBuy.setOnClickListener {
-                product?.let {
-                    //goToCharacterEdit(it)
+                product?.let { itProduct ->
+                    ShopCart.addProductToCart(itProduct, currentQuantityValue)
                 }
             }
         }
     }
 
-    /*private fun goToCharacterEdit(domainRecipe: DomainProduct) {
-        binding?.let {
-            navigator.goToRecipeMap(it.root, domainRecipe)
-        }
-    }*/
+    companion object {
+        const val VOUCHER = "VOUCHER"
+        const val TSHIRT = "TSHIRT"
+    }
 }

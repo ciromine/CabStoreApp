@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.example.cabstoreapp.R
+import com.example.cabstoreapp.core.ShopCart
 import com.example.cabstoreapp.core.mvi.MviUi
 import com.example.cabstoreapp.core.mvi.MviUiEffect
 import com.example.cabstoreapp.databinding.FragmentProductListBinding
@@ -46,8 +47,6 @@ class ProductListFragment : Fragment(), MviUi<ProductListUIntent, ProductListUiS
 
     private var ProductOriginalList: MutableList<DomainProduct>? = null
 
-    private var searchMenu = false
-
     @Inject
     lateinit var navigator: Navigator
 
@@ -71,6 +70,9 @@ class ProductListFragment : Fragment(), MviUi<ProductListUIntent, ProductListUiS
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setHasOptionsMenu(true)
+        binding?.btViewShopcart?.setOnClickListener {
+            navigator.goToCheckoutDetail(it.rootView)
+        }
     }
 
     private fun statesProcessIntents() {
@@ -144,7 +146,7 @@ class ProductListFragment : Fragment(), MviUi<ProductListUIntent, ProductListUiS
 
     override fun handleEffect(uiEffect: ProductListUiEffect) {
         when (uiEffect) {
-            is ProductListUiEffect.NavigateToCharacterDetailUiEffect -> goToCharacterEdit(uiEffect.domainProduct)
+            is ProductListUiEffect.NavigateToProductDetailUiEffect -> goToProductDetails(uiEffect.domainProduct)
         }
     }
 
@@ -154,7 +156,7 @@ class ProductListFragment : Fragment(), MviUi<ProductListUIntent, ProductListUiS
         }
     }
 
-    private fun goToCharacterEdit(domainProduct: DomainProduct) {
+    private fun goToProductDetails(domainProduct: DomainProduct) {
         binding?.let {
             navigator.goToProductDetail(it.root, domainProduct)
         }
@@ -163,5 +165,29 @@ class ProductListFragment : Fragment(), MviUi<ProductListUIntent, ProductListUiS
     override fun onDestroy() {
         super.onDestroy()
         binding = null
+    }
+
+    override fun onResume() {
+        super.onResume()
+        val listOfProducts = ShopCart.getProductsFromCart()
+        if (listOfProducts.size > 0) {
+            showBottomSheetDialog()
+            binding?.btViewShopcart?.isEnabled = true
+        } else {
+            binding?.btViewShopcart?.isEnabled = false
+        }
+    }
+
+    private fun showBottomSheetDialog() {
+        val buyBottomSheetDialog =
+            BuyBottomSheetDialog()
+        buyBottomSheetDialog.show(
+            parentFragmentManager,
+            BUY_BOTTOM_SHEET_DIALOG
+        )
+    }
+
+    companion object {
+        const val BUY_BOTTOM_SHEET_DIALOG = "BUY_BOTTOM_SHEET_DIALOG"
     }
 }

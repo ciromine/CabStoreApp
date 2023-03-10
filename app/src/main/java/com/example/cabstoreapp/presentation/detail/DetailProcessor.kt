@@ -1,11 +1,8 @@
 package com.example.cabstoreapp.presentation.detail
 
 import com.example.cabstoreapp.core.execution.CoroutineExecutionThread
-import com.example.cabstoreapp.domain.GetProductListUseCase
 import com.example.cabstoreapp.domain.SaveProductDatabaseUseCase
 import com.example.cabstoreapp.domain.model.DomainProduct
-import com.example.cabstoreapp.presentation.productlist.ProductListAction
-import com.example.cabstoreapp.presentation.productlist.ProductListResult
 import kotlinx.coroutines.flow.*
 import javax.inject.Inject
 
@@ -14,22 +11,22 @@ class DetailProcessor @Inject constructor(
     private val coroutineThreadProvider: CoroutineExecutionThread
 ) {
 
-    fun actionProcessor(actions: ProductListAction): Flow<ProductListResult> =
+    fun actionProcessor(actions: DetailAction): Flow<DetailResult> =
         when (actions) {
-            is ProductListAction.GetProductListAction -> saveProductActionProcessor()
-            is ProductListAction.GoToDetailAction -> goToDetailActionProcessor(actions.domainProduct)
+            is DetailAction.BuyProductAction -> saveProductActionProcessor()
+            is DetailAction.GoToDetailAction -> goToDetailActionProcessor(actions.domainProduct)
         }
 
-    private fun saveProductActionProcessor(): Flow<ProductListResult> =
+    private fun saveProductActionProcessor(): Flow<DetailResult> =
         useCase.execute()
             .map {
-                ProductListResult.GetProductListResult.Success(it.products) as ProductListResult
+                DetailResult.GetDetailResult.Success(it.products) as DetailResult
             }.onStart {
-                emit(ProductListResult.GetProductListResult.InProgress)
+                emit(DetailResult.GetDetailResult.InProgress)
             }
             .flowOn(coroutineThreadProvider.ioThread())
 
-    private fun goToDetailActionProcessor(domainProduct: DomainProduct): Flow<ProductListResult> = flow {
-        emit(ProductListResult.NavigateToResult.GoToDetail(domainProduct))
+    private fun goToDetailActionProcessor(domainProduct: DomainProduct): Flow<DetailResult> = flow {
+        emit(DetailResult.NavigateToResult.GoToDetail(domainProduct))
     }
 }

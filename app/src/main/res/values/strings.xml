@@ -4,9 +4,15 @@
     <string name="tv_product_title_label">Listado de productos</string>
     <string name="tv_title_product_list">Listado de productos</string>
     <string name="tv_title_product_detail_list">Detalle de product</string>
-    <string name="bt_buy">Comprar</string>
+    <string name="bt_buy">Agregar al carro</string>
     <string name="tv_quantity">Cantidad:</string>
     <string name="tv_name">Nombre:</string>
     <string name="tv_price">Precio:</string>
+    <string name="tv_voucher">Promoción lleva 2 voucher por el precio de 1!!!</string>
+    <string name="tv_tshirt">Promoción por la compra de 3 poleras o más precio a solo 19.00€!!!</string>
+    <string name="tv_label_checkout">Tienes productos en tu carro de compras, puedes ir a pagar o seguir escogiendo más productos</string>
+    <string name="bt_checkout">Pagar</string>
+    <string name="bt_view_shopcart">Ver carrito de compras</string>
+    <string name="tv_total">Total:</string>
 
 </resources>

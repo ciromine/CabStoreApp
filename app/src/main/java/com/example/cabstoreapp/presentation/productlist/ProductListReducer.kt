@@ -50,4 +50,3 @@ class ProductListReducer @Inject constructor() :
         }
     }
 }
-

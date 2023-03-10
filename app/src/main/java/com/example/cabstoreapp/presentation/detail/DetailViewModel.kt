@@ -4,7 +4,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.cabstoreapp.core.mvi.MviPresentation
 import com.example.cabstoreapp.core.mvi.MviPresentationEffect
-import com.example.cabstoreapp.presentation.productlist.*
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
@@ -15,17 +14,17 @@ import javax.inject.Inject
 @ExperimentalCoroutinesApi
 @HiltViewModel
 class DetailViewModel @Inject constructor(
-    private val reducer: ProductListReducer,
-    private val actionProcessorHolder: ProductListProcessor
-) : ViewModel(), MviPresentation<ProductListUIntent, ProductListUiState>,
-    MviPresentationEffect<ProductListUiEffect> {
+    private val reducer: DetailReducer,
+    private val actionProcessorHolder: DetailProcessor
+) : ViewModel(), MviPresentation<DetailUIntent, DetailUiState>,
+    MviPresentationEffect<DetailUiEffect> {
 
-    private val defaultUiState: ProductListUiState = ProductListUiState.DefaultUiState
+    private val defaultUiState: DetailUiState = DetailUiState.DefaultUiState
 
     private val uiState = MutableStateFlow(defaultUiState)
-    private val uiEffect: MutableSharedFlow<ProductListUiEffect> = MutableSharedFlow()
+    private val uiEffect: MutableSharedFlow<DetailUiEffect> = MutableSharedFlow()
 
-    override fun processUserIntents(userIntents: Flow<ProductListUIntent>) {
+    override fun processUserIntents(userIntents: Flow<DetailUIntent>) {
         userIntents
             .buffer()
             .flatMapMerge { userIntent ->
@@ -41,19 +40,19 @@ class DetailViewModel @Inject constructor(
             .launchIn(viewModelScope)
     }
 
-    private fun ProductListUIntent.toAction(): ProductListAction {
+    private fun DetailUIntent.toAction(): DetailAction {
         return when (this) {
-            ProductListUIntent.InitialUIntent, ProductListUIntent.RetrySeeCharacterListUIntent -> ProductListAction.GetProductListAction
-            is ProductListUIntent.SeeDetailUIntent -> ProductListAction.GoToDetailAction(
+            DetailUIntent.InitialUIntent, DetailUIntent.RetrySeeCharacterListUIntent -> DetailAction.BuyProductAction
+            is DetailUIntent.SeeDetailUIntent -> DetailAction.GoToDetailAction(
                 domainProduct
             )
         }
     }
 
-    private fun Flow<ProductListResult>.handleEffect(): Flow<ProductListResult> {
+    private fun Flow<DetailResult>.handleEffect(): Flow<DetailResult> {
         return onEach { change ->
             val event = when (change) {
-                is ProductListResult.NavigateToResult.GoToDetail -> ProductListUiEffect.NavigateToCharacterDetailUiEffect(
+                is DetailResult.NavigateToResult.GoToDetail -> DetailUiEffect.NavigateToCharacterDetailUiEffect(
                     change.domainRecipe
                 )
                 else -> return@onEach
@@ -62,6 +61,6 @@ class DetailViewModel @Inject constructor(
         }
     }
 
-    override fun uiStates(): StateFlow<ProductListUiState> = uiState
-    override fun uiEffect(): SharedFlow<ProductListUiEffect> = uiEffect.asSharedFlow()
+    override fun uiStates(): StateFlow<DetailUiState> = uiState
+    override fun uiEffect(): SharedFlow<DetailUiEffect> = uiEffect.asSharedFlow()
 }
