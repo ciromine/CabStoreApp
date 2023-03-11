@@ -10,6 +10,7 @@ class CalculationUtils {
             var countTshirt = 0
             var valueVoucher = 0.0
             var valueTshirt = 0.0
+
             products.forEach {
                 if (it.code == VOUCHER) {
                     countVouchers++
@@ -20,13 +21,37 @@ class CalculationUtils {
                 }
                 total += it.price
             }
-            if (countVouchers >= 2) {
-                total -= ((countVouchers / 2) * valueVoucher)
-            }
-            if (countTshirt > 3) {
-                total = total - (valueTshirt * countTshirt) + (TSHIRT_PROMO_PRICE * countTshirt)
-            }
+            total = subtractVoucherDiscount(total, countVouchers, valueVoucher)
+            total = subtractTshirtDiscount(total, countTshirt, valueTshirt)
             return total
+        }
+
+        private fun subtractVoucherDiscount(
+            total: Double,
+            countVouchers: Int,
+            valueVoucher: Double
+        ): Double {
+            var result = total
+            if (countVouchers >= 2) {
+                result -= if (countVouchers % 2 == 0) {
+                    ((countVouchers / 2) * valueVoucher)
+                } else {
+                    (((countVouchers - 1) / 2) * valueVoucher)
+                }
+            }
+            return result
+        }
+
+        private fun subtractTshirtDiscount(
+            total: Double,
+            countTshirt: Int,
+            valueTshirt: Double
+        ): Double {
+            var result = total
+            if (countTshirt >= 3) {
+                result = result - (valueTshirt * countTshirt) + (TSHIRT_PROMO_PRICE * countTshirt)
+            }
+            return result
         }
 
         const val VOUCHER = "VOUCHER"

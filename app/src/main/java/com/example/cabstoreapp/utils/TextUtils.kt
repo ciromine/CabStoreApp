@@ -8,7 +8,7 @@ class TextUtils {
             var result = ""
             products.sortBy { it.name }
             products.forEachIndexed { index, element ->
-                result = if (index == 1) {
+                result = if (index == 0) {
                     element.name
                 } else {
                     "${result}\n${element.name}"
