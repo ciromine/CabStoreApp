@@ -43,6 +43,19 @@
         <action
             android:id="@+id/action_checkoutFragment_to_productListFragment"
             app:destination="@id/productListFragment" />
+        <action
+            android:id="@+id/action_checkoutFragment_to_successFragment"
+            app:destination="@id/successFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/successFragment"
+        android:name="com.example.cabstoreapp.ui.success.SuccessFragment"
+        android:label="@string/tv_success_title"
+        tools:layout="@layout/fragment_success">
+        <action
+            android:id="@+id/action_successFragment_to_productListFragment"
+            app:destination="@id/productListFragment" />
     </fragment>
 
 </navigation>

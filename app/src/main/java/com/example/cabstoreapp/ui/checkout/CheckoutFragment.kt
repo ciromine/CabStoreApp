@@ -16,7 +16,6 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 import javax.inject.Inject
 
-
 @ExperimentalCoroutinesApi
 @FlowPreview
 @AndroidEntryPoint
@@ -45,6 +44,10 @@ class CheckoutFragment : Fragment() {
         binding?.btCleanCheckout?.setOnClickListener {
             ShopCart.cleanCart()
             navigator.backtoProductListFromCheckout(Navigation.findNavController(view))
+        }
+        binding?.btBuy?.setOnClickListener {
+            ShopCart.cleanCart()
+            navigator.goToSuccessFragment(Navigation.findNavController(view))
         }
     }
 }

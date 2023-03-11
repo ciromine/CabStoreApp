@@ -15,5 +15,8 @@
     <string name="bt_clean_checkout">Limpiar carrito</string>
     <string name="bt_view_shopcart">Ver carrito de compras</string>
     <string name="tv_total">Total:</string>
+    <string name="tv_success">Gracias por tu compra, nos comunicaremos contigo a la brevedad!!!</string>
+    <string name="tv_success_title">Compra realizada</string>
+    <string name="bt_success">Volver al home</string>
 
 </resources>

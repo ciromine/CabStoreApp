@@ -1,15 +1,12 @@
 package com.example.cabstoreapp.ui.navigator
 
-import android.view.View
 import androidx.navigation.*
-import com.example.cabstoreapp.R
 import com.example.cabstoreapp.domain.model.DomainProduct
 import com.example.cabstoreapp.ui.checkout.CheckoutFragmentDirections
-import com.example.cabstoreapp.ui.detail.DetailFragment
 import com.example.cabstoreapp.ui.detail.DetailFragmentDirections
 import com.example.cabstoreapp.ui.productlist.ProductListFragmentDirections
+import com.example.cabstoreapp.ui.success.SuccessFragmentDirections
 import javax.inject.Inject
-
 
 class Navigator @Inject constructor() {
 
@@ -37,13 +34,20 @@ class Navigator @Inject constructor() {
         safeNavigation(navController, direction)
     }
 
+    fun goToSuccessFragment(navController: NavController) {
+        val direction =
+            CheckoutFragmentDirections.actionCheckoutFragmentToSuccessFragment()
+        safeNavigation(navController, direction)
+    }
+
+    fun backtoProductListFromSuccess(navController: NavController) {
+        val direction =
+            SuccessFragmentDirections.actionSuccessFragmentToProductListFragment()
+        safeNavigation(navController, direction)
+    }
+
     private fun safeNavigation(navController: NavController, direction: NavDirections) {
         navController.currentDestination?.getAction(direction.actionId)
             ?.let { navController.navigate(direction) }
     }
-
-    /*fun goToBackView(view: View) {
-        val navOptions: NavOptions = NavOptions.Builder().setPopUpTo(R.id.detailFragment, true).build()
-        Navigation.findNavController(view).navigate(R.id.productListFragment,null, navOptions)
-    }*/
 }
