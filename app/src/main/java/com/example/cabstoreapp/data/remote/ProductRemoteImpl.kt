@@ -7,5 +7,5 @@ import javax.inject.Inject
 class ProductRemoteImpl @Inject constructor(private val restApi: ProductApi) :
     ProductRemote {
 
-    override suspend fun getRecipeList(): ProductListResponse = restApi.getRecipes()
+    override suspend fun getProductList(): ProductListResponse = restApi.getRecipes()
 }

@@ -4,5 +4,5 @@ import com.example.cabstoreapp.data.remote.model.ProductListResponse
 
 interface ProductRemote {
 
-    suspend fun getRecipeList(): ProductListResponse
+    suspend fun getProductList(): ProductListResponse
 }
